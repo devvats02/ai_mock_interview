@@ -1,26 +1,29 @@
-import { Button } from '@/components/ui/button';
-import { getCurrentUser } from '@/lib/actions/auth.action';
-import { getFeedbackByInterviewId, getInterviewById } from '@/lib/actions/general.action';
-import dayjs from 'dayjs';
-import Image from 'next/image';
-import Link from 'next/link';
-import { redirect } from 'next/navigation';
+import dayjs from "dayjs";
+import Link from "next/link";
+import Image from "next/image";
+import { redirect } from "next/navigation";
 
+import {
+  getFeedbackByInterviewId,
+  getInterviewById,
+} from "@/lib/actions/general.action";
+import { Button } from "@/components/ui/button";
+import { getCurrentUser } from "@/lib/actions/auth.action";
 
-const Page = async ({params}: RouteParams) =>{
-    const { id } = await params;
-    const user = await getCurrentUser();
+const Feedback = async ({ params }: RouteParams) => {
+  const { id } = await params;
+  const user = await getCurrentUser();
 
-    const interview = await getInterviewById(id);
-        if (!interview) redirect("/");
+  const interview = await getInterviewById(id);
+  if (!interview) redirect("/");
 
-    const feedback = await getFeedbackByInterviewId({
-        interviewId: id,
-        userId: user?.id!,
-    });
-   
-    return(
-        <section className="section-feedback">
+  const feedback = await getFeedbackByInterviewId({
+    interviewId: id,
+    userId: user?.id!,
+  });
+
+  return (
+    <section className="section-feedback">
       <div className="flex flex-row justify-center">
         <h1 className="text-4xl font-semibold">
           Feedback on the Interview -{" "}
@@ -44,7 +47,7 @@ const Page = async ({params}: RouteParams) =>{
 
           {/* Date */}
           <div className="flex flex-row gap-2">
-            <Image src="/calender.svg" width={22} height={22} alt="calendar" />
+            <Image src="/calendar.svg" width={22} height={22} alt="calendar" />
             <p>
               {feedback?.createdAt
                 ? dayjs(feedback.createdAt).format("MMM D, YYYY h:mm A")
@@ -110,6 +113,7 @@ const Page = async ({params}: RouteParams) =>{
         </Button>
       </div>
     </section>
-    )
-}
-export default Page;
+  );
+};
+
+export default Feedback;
