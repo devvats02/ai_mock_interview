@@ -1,5 +1,6 @@
-import AuthButton from '@/components/AuthButton';
+import AuthButtons from '@/components/AuthButton';
 import Footer from '@/components/Footer';
+import ResumeButtons from '@/components/ResumeButton';
 import { isAuthenticated } from '@/lib/actions/auth.action';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -13,12 +14,13 @@ const RootLayout = async ({children} : {children : ReactNode})=>{
     
     return(
         <div className="root-layout">
-      <nav>
+      <nav className='flex'>
         <Link href="/" className="flex items-center gap-2">
           <Image src="/logo.svg" alt="MockMate Logo" width={35} height={30} />
           <h2 className="text-primary-100">PrepWise</h2>
-          <AuthButton/>
         </Link>
+        <ResumeButtons/>
+        <AuthButtons/>
       </nav>
       
 
